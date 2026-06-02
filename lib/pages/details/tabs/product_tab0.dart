@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:formation_flutter/InheritedProduct.dart';
 import 'package:formation_flutter/l10n/app_localizations.dart';
 import 'package:formation_flutter/model/product.dart';
 import 'package:formation_flutter/pages/details/product_loader.dart';
@@ -43,7 +44,8 @@ class _ProductImage extends StatelessWidget {
     final Product product = ProductIW.of(context).product;
 
     return Image.network(
-      product.picture ?? '',
+      ProductIW.of(context).product.picture!,
+      //'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=1310&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       fit: .cover,
       cacheWidth: MediaQuery.widthOf(context).toInt(),
     );
@@ -90,7 +92,7 @@ class _Scores extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Product product = ProductIW.of(context).product;
+    final Product _product = ProductIW.of(context).product;
 
     return DefaultTextStyle(
       style: context.theme.altText,
@@ -108,8 +110,7 @@ class _Scores extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsetsDirectional.only(end: 5.0),
                       child: _NutriScore(
-                        nutriscore:
-                            product.nutriScore ?? ProductNutriScore.unknown,
+                        nutriscore: ProductNutriScore.A,
                       ),
                     ),
                   ),

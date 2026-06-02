@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:formation_flutter/l10n/app_localizations.dart';
 import 'package:formation_flutter/model/product.dart';
 import 'package:formation_flutter/pages/details/product_loader.dart';
+import 'package:formation_flutter/InheritedProduct.dart';
+import 'package:formation_flutter/model/product.dart';
 import 'package:formation_flutter/pages/details/tabs/product_tab0.dart';
 import 'package:formation_flutter/pages/details/tabs/product_tab1.dart';
 import 'package:formation_flutter/pages/details/tabs/product_tab2.dart';
 import 'package:formation_flutter/pages/details/tabs/product_tab3.dart';
 import 'package:formation_flutter/res/app_icons.dart';
+import 'package:formation_flutter/pages/details/tabs/product_tab1.dart';
+import 'package:formation_flutter/pages/details/tabs/product_tab2.dart';
+import 'package:formation_flutter/pages/details/tabs/product_tab3.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -17,6 +22,29 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   ProductPageTabs _currentTab = ProductPageTabs.values.first;
+
+  @override
+  State<ProductPage> createState() => _ProductPageState();
+}
+
+class _ProductPageState extends State<ProductPage> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle = TextStyle(
+    fontSize: 30,
+    fontWeight: .bold,
+  );
+  static const List<Widget> _widgetOptions = <Widget>[
+    ProductTab0(),
+    ProductTab1(),
+    ProductTab2(),
+    ProductTab3(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
