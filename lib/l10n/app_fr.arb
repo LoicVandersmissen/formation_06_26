@@ -4,6 +4,7 @@
   "my_scans_screen_title": "Mes scans",
   "my_scans_screen_description": "Vous n'avez pas encore scanné de produit",
   "my_scans_screen_button": "Commencer",
+  "my_scans_screen_barcode_button": "Scanner un code-barres",
   "nova_group": "Groupe NOVA",
   "nutriscore": "Nutri-Score",
   "greenscore": "Green-Score",

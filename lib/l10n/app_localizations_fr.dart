@@ -25,6 +25,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get my_scans_screen_button => 'Commencer';
 
   @override
+  String get my_scans_screen_barcode_button => 'Scanner un code-barres';
+
+  @override
   String get nova_group => 'Groupe NOVA';
 
   @override

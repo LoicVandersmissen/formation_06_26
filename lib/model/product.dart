@@ -1,4 +1,4 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: unnecessary_string_escapes, constant_identifier_names
 class Product {
   final String barcode;
   final String? name;
@@ -271,4 +271,3 @@ Product generateProduct() => Product(
     salt: Nutriment(unit: 'g', perServing: 0.1, per100g: 0.1),
   ),
 );
-

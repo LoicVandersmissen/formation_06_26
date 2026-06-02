@@ -124,6 +124,12 @@ abstract class AppLocalizations {
   /// **'Commencer'**
   String get my_scans_screen_button;
 
+  /// No description provided for @my_scans_screen_barcode_button.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanner un code-barres'**
+  String get my_scans_screen_barcode_button;
+
   /// No description provided for @nova_group.
   ///
   /// In fr, this message translates to:

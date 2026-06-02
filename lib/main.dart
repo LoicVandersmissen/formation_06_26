@@ -19,6 +19,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Avenir',
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.yellow),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.white,
+        ),
       ),
       debugShowCheckedModeBanner: false,
       home: const HomePage(),

@@ -10,12 +10,15 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mes scans'),
+        title: Text(localizations.my_scans_screen_title),
         centerTitle: false,
         actions: [
           IconButton(
+            tooltip: localizations.my_scans_screen_barcode_button,
             onPressed: () {},
             icon: Padding(
               padding: const EdgeInsetsDirectional.only(end: 8.0),
@@ -25,16 +28,21 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: Center(
-        child: Column(
-          children: [
-            Spacer(flex: 1),
-            SvgPicture.asset(AppVectorialImages.illEmpty),
-            Spacer(flex: 4),
-            Text('Vous n\avez pas encore scanné de produit'),
-            Spacer(flex: 3),
-            FractionallySizedBox(
-              widthFactor: 0.35,
-              child: FilledButton(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(horizontal: 15.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Spacer(flex: 20),
+              SvgPicture.asset(AppVectorialImages.illEmpty),
+              Spacer(flex: 10),
+              Text(
+                localizations.my_scans_screen_description,
+                textAlign: TextAlign.center,
+              ),
+              Spacer(flex: 15),
+              TextButton(
+                onPressed: () {},
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.blue,
                   backgroundColor: AppColors.yellow,
@@ -42,24 +50,18 @@ class HomePage extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(22.0)),
                   ),
                 ),
-                onPressed: () {},
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 8.0,
                   children: [
-                    Expanded(
-                      child: Text(
-                        AppLocalizations.of(
-                          context,
-                        )!.my_scans_screen_button.toUpperCase(),
-                      ),
-                    ),
-                    SizedBox(width: 8.0),
+                    Text(localizations.my_scans_screen_button.toUpperCase()),
                     Icon(Icons.arrow_forward),
                   ],
                 ),
               ),
-            ),
-            Spacer(flex: 1),
-          ],
+              Spacer(flex: 20),
+            ],
+          ),
         ),
       ),
     );
