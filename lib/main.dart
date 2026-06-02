@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:formation_flutter/l10n/app_localizations.dart';
-import 'package:formation_flutter/pages/homepage/homepage.dart';
+import 'package:formation_flutter/pages/details/product_page.dart';
 import 'package:formation_flutter/res/app_colors.dart';
+import 'package:formation_flutter/res/app_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,12 +20,25 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Avenir',
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.yellow),
+        extensions: [OffThemeExtension.defaultValues()],
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.white,
         ),
+        navigationBarTheme: const NavigationBarThemeData(
+          indicatorColor: AppColors.blue,
+        ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          selectedItemColor: AppColors.blue,
+          unselectedItemColor: AppColors.grey2,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+        ),
+        dividerTheme: DividerThemeData(color: AppColors.divider, space: 1.0),
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: const ProductPage(),
     );
   }
 }
