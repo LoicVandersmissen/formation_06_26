@@ -73,9 +73,7 @@ class _ProductBody extends StatelessWidget {
           ),
           Text('Cassegrain'),
           _Scores(),
-          SizedBox(
-            height: 1000,
-          ),
+          _Info(),
         ],
       ),
     );
@@ -283,3 +281,128 @@ class _GreenScore extends StatelessWidget {
     };
   }
 }
+
+class _Info extends StatelessWidget {
+  const _Info();
+
+  @override
+  Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        _ProductItemValue(
+          label: localizations.product_quantity,
+          value: '900g',
+        ),
+        _ProductItemValue(
+          label: localizations.product_countries,
+          value: 'France',
+          includeDivider: false,
+        ),
+        const SizedBox(height: 15.0),
+        Row(
+          children: <Widget>[
+            Expanded(
+              flex: 40,
+              child: _ProductBubble(
+                label: localizations.product_vegan,
+                value: _ProductBubbleValue.off,
+              ),
+            ),
+            const Spacer(flex: 10),
+            Expanded(
+              flex: 40,
+              child: _ProductBubble(
+                label: localizations.product_vegetarian,
+                value: _ProductBubbleValue.on,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _ProductItemValue extends StatelessWidget {
+  const _ProductItemValue({
+    required this.label,
+    required this.value,
+    this.includeDivider = true,
+  });
+
+  final String label;
+  final String value;
+  final bool includeDivider;
+
+  @override
+  Widget build(BuildContext context) {
+    return MergeSemantics(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsetsDirectional.symmetric(vertical: 12.0),
+            child: Row(
+              children: <Widget>[
+                Expanded(child: Text(label)),
+                Expanded(child: Text(value, textAlign: TextAlign.end)),
+              ],
+            ),
+          ),
+          if (includeDivider) const Divider(height: 1.0),
+        ],
+      ),
+    );
+  }
+}
+
+class _ProductBubble extends StatelessWidget {
+  const _ProductBubble({required this.label, required this.value});
+
+  final String label;
+  final _ProductBubbleValue value;
+
+  @override
+  Widget build(BuildContext context) {
+    final String semanticsValue = value == _ProductBubbleValue.on
+        ? AppLocalizations.of(context)!.yes
+        : AppLocalizations.of(context)!.no;
+    return Semantics(
+      label: '$label : $semanticsValue',
+      excludeSemantics: true,
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.blueLight,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        padding: const EdgeInsetsDirectional.symmetric(
+          vertical: 10.0,
+          horizontal: 15.0,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Icon(
+              value == _ProductBubbleValue.on
+                  ? AppIcons.checkmark
+                  : AppIcons.close,
+              color: AppColors.white,
+            ),
+            const SizedBox(width: 10.0),
+            Expanded(
+              child: Text(
+                label,
+                style: const TextStyle(color: AppColors.white),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+enum _ProductBubbleValue { on, off }
