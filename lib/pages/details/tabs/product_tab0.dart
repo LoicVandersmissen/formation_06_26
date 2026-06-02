@@ -21,12 +21,13 @@ class ProductTab0 extends StatelessWidget {
           height: kImageHeight,
           child: _ProductImage(),
         ),
-        PositionedDirectional(
-          start: 0.0,
-          end: 0.0,
-          top: kImageHeight - _ProductBody._radius,
-          bottom: 0.0,
-          child: _ProductBody(),
+        Positioned.fill(
+          child: SingleChildScrollView(
+            padding: EdgeInsetsDirectional.only(
+              top: kImageHeight - _ProductBody._radius,
+            ),
+            child: _ProductBody(),
+          ),
         ),
       ],
     );
