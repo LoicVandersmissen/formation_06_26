@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:formation_flutter/demo_form.dart';
 import 'package:formation_flutter/l10n/app_localizations.dart';
-import 'package:formation_flutter/pages/details/product_page.dart';
 import 'package:formation_flutter/res/app_colors.dart';
 import 'package:formation_flutter/res/app_theme.dart';
 
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         dividerTheme: DividerThemeData(color: AppColors.divider, space: 1.0),
       ),
       debugShowCheckedModeBanner: false,
-      home: const ProductPage(),
+      home: const DemoForm(),
     );
   }
 }

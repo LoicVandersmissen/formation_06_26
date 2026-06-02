@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:formation_flutter/l10n/app_localizations.dart';
+import 'package:formation_flutter/model/product.dart';
+import 'package:formation_flutter/pages/details/product_loader.dart';
 import 'package:formation_flutter/pages/details/tabs/product_tab0.dart';
 import 'package:formation_flutter/pages/details/tabs/product_tab1.dart';
 import 'package:formation_flutter/pages/details/tabs/product_tab2.dart';
@@ -18,43 +20,46 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox.expand(
-        child: Stack(
-          children: [
-            Offstage(
-              offstage: _currentTab != ProductPageTabs.summary,
-              child: const ProductTab0(),
-            ),
-            Offstage(
-              offstage: _currentTab != ProductPageTabs.info,
-              child: const ProductTab1(),
-            ),
-            Offstage(
-              offstage: _currentTab != ProductPageTabs.nutrition,
-              child: const ProductTab2(),
-            ),
-            Offstage(
-              offstage: _currentTab != ProductPageTabs.nutritionalValues,
-              child: const ProductTab3(),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentTab.index,
-        onTap: (int position) {
-          _currentTab = ProductPageTabs.values[position];
-          setState(() {});
-        },
-        items: ProductPageTabs.values
-            .map(
-              (ProductPageTabs tab) => BottomNavigationBarItem(
-                icon: Icon(tab.icon),
-                label: tab.label(AppLocalizations.of(context)!),
+    return ProductIW(
+      product: generateProduct(),
+      child: Scaffold(
+        body: SizedBox.expand(
+          child: Stack(
+            children: [
+              Offstage(
+                offstage: _currentTab != ProductPageTabs.summary,
+                child: const ProductTab0(),
               ),
-            )
-            .toList(growable: false),
+              Offstage(
+                offstage: _currentTab != ProductPageTabs.info,
+                child: const ProductTab1(),
+              ),
+              Offstage(
+                offstage: _currentTab != ProductPageTabs.nutrition,
+                child: const ProductTab2(),
+              ),
+              Offstage(
+                offstage: _currentTab != ProductPageTabs.nutritionalValues,
+                child: const ProductTab3(),
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentTab.index,
+          onTap: (int position) {
+            _currentTab = ProductPageTabs.values[position];
+            setState(() {});
+          },
+          items: ProductPageTabs.values
+              .map(
+                (ProductPageTabs tab) => BottomNavigationBarItem(
+                  icon: Icon(tab.icon),
+                  label: tab.label(AppLocalizations.of(context)!),
+                ),
+              )
+              .toList(growable: false),
+        ),
       ),
     );
   }

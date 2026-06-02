@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:formation_flutter/l10n/app_localizations.dart';
 import 'package:formation_flutter/model/product.dart';
+import 'package:formation_flutter/pages/details/product_loader.dart';
 import 'package:formation_flutter/res/app_colors.dart';
 import 'package:formation_flutter/res/app_icons.dart';
 import 'package:formation_flutter/res/app_theme.dart';
@@ -39,8 +40,10 @@ class _ProductImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Product product = ProductIW.of(context).product;
+
     return Image.network(
-      'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=1310&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      product.picture ?? '',
       fit: .cover,
       cacheWidth: MediaQuery.widthOf(context).toInt(),
     );
@@ -54,6 +57,8 @@ class _ProductBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Product product = ProductIW.of(context).product;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -68,10 +73,10 @@ class _ProductBody extends StatelessWidget {
         crossAxisAlignment: .start,
         children: [
           Text(
-            'Petits pois et carottes',
+            product.name ?? '',
             style: Theme.of(context).extension<OffThemeExtension>()!.title1,
           ),
-          Text('Cassegrain'),
+          Text(product.brands?.join(', ') ?? ''),
           _Scores(),
           _Info(),
         ],
@@ -85,6 +90,8 @@ class _Scores extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Product product = ProductIW.of(context).product;
+
     return DefaultTextStyle(
       style: context.theme.altText,
       child: ColoredBox(
@@ -101,7 +108,8 @@ class _Scores extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsetsDirectional.only(end: 5.0),
                       child: _NutriScore(
-                        nutriscore: ProductNutriScore.A,
+                        nutriscore:
+                            product.nutriScore ?? ProductNutriScore.unknown,
                       ),
                     ),
                   ),
@@ -111,7 +119,8 @@ class _Scores extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsetsDirectional.only(start: 25.0),
                       child: _NovaGroup(
-                        novaScore: ProductNovaScore.group1,
+                        novaScore:
+                            product.novaScore ?? ProductNovaScore.unknown,
                       ),
                     ),
                   ),
@@ -120,7 +129,7 @@ class _Scores extends StatelessWidget {
             ),
             const Divider(),
             _GreenScore(
-              greenScore: ProductGreenScore.D,
+              greenScore: product.greenScore ?? ProductGreenScore.unknown,
             ),
           ],
         ),
@@ -287,6 +296,7 @@ class _Info extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Product product = ProductIW.of(context).product;
     final AppLocalizations localizations = AppLocalizations.of(context)!;
 
     return Column(
@@ -294,11 +304,11 @@ class _Info extends StatelessWidget {
       children: <Widget>[
         _ProductItemValue(
           label: localizations.product_quantity,
-          value: '900g',
+          value: product.quantity ?? '-',
         ),
         _ProductItemValue(
           label: localizations.product_countries,
-          value: 'France',
+          value: product.manufacturingCountries?.join(', ') ?? '-',
           includeDivider: false,
         ),
         const SizedBox(height: 15.0),
