@@ -87,7 +87,7 @@ class _ProductBody extends StatelessWidget {
   }
 }
 
-class _Info {}
+//class _Info {}
 
 class _Scores extends StatelessWidget {
   const _Scores();

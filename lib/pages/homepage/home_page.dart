@@ -4,6 +4,7 @@ import 'package:formation_flutter/l10n/app_localizations.dart';
 import 'package:formation_flutter/res/app_colors.dart';
 import 'package:formation_flutter/res/app_icons.dart';
 import 'package:formation_flutter/res/app_vectorial_images.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -19,7 +20,10 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             tooltip: localizations.my_scans_screen_barcode_button,
-            onPressed: () {},
+            onPressed: () {
+              //context.push('/product');
+              GoRouter.of(context).push('/product?paramA=pouet');
+            },
             icon: Padding(
               padding: const EdgeInsetsDirectional.only(end: 8.0),
               child: Icon(AppIcons.barcode),
@@ -42,7 +46,10 @@ class HomePage extends StatelessWidget {
               ),
               Spacer(flex: 15),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  //context.push('/product');
+                  GoRouter.of(context).push('/product?paramA=pouetPouet');
+                },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.blue,
                   backgroundColor: AppColors.yellow,

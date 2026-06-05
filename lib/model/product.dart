@@ -1,4 +1,3 @@
-// ignore_for_file: unnecessary_string_escapes, constant_identifier_names
 class Product {
   final String barcode;
   final String? name;

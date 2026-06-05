@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class DemoForm extends StatefulWidget {
@@ -51,7 +52,12 @@ class _DemoFormState extends State<DemoForm> {
                   Consumer<FormData>(
                     builder: (_, FormData changeNotifier, _) {
                       return FilledButton(
-                        onPressed: changeNotifier.valid ? () {} : null,
+                        onPressed: changeNotifier.valid
+                            ? () {
+                                context.push('/product');
+                                GoRouter.of(context).push('/product');
+                              }
+                            : null,
                         child: const Text('Envoyer'),
                       );
                     },
