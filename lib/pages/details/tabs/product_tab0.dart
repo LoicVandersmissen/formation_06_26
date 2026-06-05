@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:formation_flutter/InheritedProduct.dart';
 import 'package:formation_flutter/l10n/app_localizations.dart';
 import 'package:formation_flutter/model/product.dart';
 import 'package:formation_flutter/pages/details/product_loader.dart';
 import 'package:formation_flutter/res/app_colors.dart';
 import 'package:formation_flutter/res/app_icons.dart';
 import 'package:formation_flutter/res/app_theme.dart';
+import 'package:provider/provider.dart';
 
 class ProductTab0 extends StatelessWidget {
   const ProductTab0({super.key});
@@ -41,10 +41,10 @@ class _ProductImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Product product = ProductIW.of(context).product;
+    final Product product = context.watch<ProductChangeNotifier>().product!;
 
     return Image.network(
-      ProductIW.of(context).product.picture!,
+      product.picture!,
       //'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=1310&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       fit: .cover,
       cacheWidth: MediaQuery.widthOf(context).toInt(),
@@ -59,7 +59,7 @@ class _ProductBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Product product = ProductIW.of(context).product;
+    final Product product = context.watch<ProductChangeNotifier>().product!;
 
     return Container(
       decoration: BoxDecoration(
@@ -80,19 +80,21 @@ class _ProductBody extends StatelessWidget {
           ),
           Text(product.brands?.join(', ') ?? ''),
           _Scores(),
-          _Info(),
+          // _Info(),
         ],
       ),
     );
   }
 }
 
+class _Info {}
+
 class _Scores extends StatelessWidget {
   const _Scores();
 
   @override
   Widget build(BuildContext context) {
-    final Product _product = ProductIW.of(context).product;
+    final Product product = context.watch<ProductChangeNotifier>().product!;
 
     return DefaultTextStyle(
       style: context.theme.altText,

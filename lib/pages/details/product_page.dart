@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:formation_flutter/l10n/app_localizations.dart';
-import 'package:formation_flutter/model/product.dart';
 import 'package:formation_flutter/pages/details/product_loader.dart';
-import 'package:formation_flutter/InheritedProduct.dart';
-import 'package:formation_flutter/model/product.dart';
 import 'package:formation_flutter/pages/details/tabs/product_tab0.dart';
 import 'package:formation_flutter/pages/details/tabs/product_tab1.dart';
 import 'package:formation_flutter/pages/details/tabs/product_tab2.dart';
 import 'package:formation_flutter/pages/details/tabs/product_tab3.dart';
 import 'package:formation_flutter/res/app_icons.dart';
-import 'package:formation_flutter/pages/details/tabs/product_tab1.dart';
-import 'package:formation_flutter/pages/details/tabs/product_tab2.dart';
-import 'package:formation_flutter/pages/details/tabs/product_tab3.dart';
+import 'package:provider/provider.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -21,73 +16,74 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+  final ProductChangeNotifier productChangeNotifier = ProductChangeNotifier();
+
   ProductPageTabs _currentTab = ProductPageTabs.values.first;
 
   @override
-  State<ProductPage> createState() => _ProductPageState();
-}
+  void initState() {
+    super.initState();
+    productChangeNotifier.load();
+  }
 
-class _ProductPageState extends State<ProductPage> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(
-    fontSize: 30,
-    fontWeight: .bold,
-  );
-  static const List<Widget> _widgetOptions = <Widget>[
-    ProductTab0(),
-    ProductTab1(),
-    ProductTab2(),
-    ProductTab3(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  @override
+  void dispose() {
+    productChangeNotifier.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ProductIW(
-      product: generateProduct(),
-      child: Scaffold(
-        body: SizedBox.expand(
-          child: Stack(
-            children: [
-              Offstage(
-                offstage: _currentTab != ProductPageTabs.summary,
-                child: const ProductTab0(),
+    return ChangeNotifierProvider<ProductChangeNotifier>.value(
+      value: productChangeNotifier,
+      child: Consumer<ProductChangeNotifier>(
+        builder: (BuildContext context, ProductChangeNotifier notifier, Widget? child) {
+          if (notifier.product == null) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+
+          return Scaffold(
+            body: SizedBox.expand(
+              child: Stack(
+                children: [
+                  Offstage(
+                    offstage: _currentTab != ProductPageTabs.summary,
+                    child: const ProductTab0(),
+                  ),
+                  Offstage(
+                    offstage: _currentTab != ProductPageTabs.info,
+                    child: const ProductTab1(),
+                  ),
+                  Offstage(
+                    offstage: _currentTab != ProductPageTabs.nutrition,
+                    child: const ProductTab2(),
+                  ),
+                  Offstage(
+                    offstage: _currentTab != ProductPageTabs.nutritionalValues,
+                    child: const ProductTab3(),
+                  ),
+                ],
               ),
-              Offstage(
-                offstage: _currentTab != ProductPageTabs.info,
-                child: const ProductTab1(),
-              ),
-              Offstage(
-                offstage: _currentTab != ProductPageTabs.nutrition,
-                child: const ProductTab2(),
-              ),
-              Offstage(
-                offstage: _currentTab != ProductPageTabs.nutritionalValues,
-                child: const ProductTab3(),
-              ),
-            ],
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentTab.index,
-          onTap: (int position) {
-            _currentTab = ProductPageTabs.values[position];
-            setState(() {});
-          },
-          items: ProductPageTabs.values
-              .map(
-                (ProductPageTabs tab) => BottomNavigationBarItem(
-                  icon: Icon(tab.icon),
-                  label: tab.label(AppLocalizations.of(context)!),
-                ),
-              )
-              .toList(growable: false),
-        ),
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: _currentTab.index,
+              onTap: (int position) {
+                _currentTab = ProductPageTabs.values[position];
+                setState(() {});
+              },
+              items: ProductPageTabs.values
+                  .map(
+                    (ProductPageTabs tab) => BottomNavigationBarItem(
+                      icon: Icon(tab.icon),
+                      label: tab.label(AppLocalizations.of(context)!),
+                    ),
+                  )
+                  .toList(growable: false),
+            ),
+          );
+        },
       ),
     );
   }

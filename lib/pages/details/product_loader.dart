@@ -20,3 +20,16 @@ class ProductIW extends InheritedWidget {
   @override
   bool updateShouldNotify(ProductIW old) => product != old.product;
 }
+
+class ProductChangeNotifier with ChangeNotifier {
+  Product? _product;
+
+  Product? get product => _product;
+
+  Future<Product> load() async {
+    await Future.delayed(const Duration(seconds: 5));
+    _product = generateProduct();
+    notifyListeners();
+    return _product!;
+  }
+}
